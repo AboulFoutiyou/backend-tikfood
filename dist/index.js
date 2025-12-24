@@ -34,7 +34,7 @@ if (require.main === module) {
             },
             // Enable CORS
             cors: {
-                origin: ['http://localhost:4200', 'http://localhost:8100', 'https://tikfood-203c5.web.app'],
+                origin: ['http://localhost:4200', 'http://localhost:8100'],
                 methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
                 preflightContinue: false,
                 optionsSuccessStatus: 204,
