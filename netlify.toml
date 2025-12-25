@@ -1,5 +1,5 @@
 [[headers]]
-  # Applique ces règles à toutes les routes
+  # Applique les headers CORS à toutes les routes (C'est OK)
   for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
@@ -7,6 +7,14 @@
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
 
 [[redirects]]
-  from = "/*"
+  # Règle 1 : Rediriger seulement les liens commençant par /api/ vers les fonctions
+  from = "/api/*"
   to = "/.netlify/functions/:splat"
+  status = 200
+
+# (Optionnel) Si vous utilisez React/Angular/Vue, ajoutez ceci à la fin
+# pour gérer le routage du frontend sans casser l'API
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
