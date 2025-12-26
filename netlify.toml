@@ -1,6 +1,6 @@
 [[headers]]
   # Applique les headers CORS à toutes les routes (C'est OK)
-  for = "/api/*"
+  for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Content-Type, Authorization"
