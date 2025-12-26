@@ -24,7 +24,7 @@ class FoodMarketplaceApplication extends (0, boot_1.BootMixin)((0, service_proxy
         // Cors middleware setup
         this.middleware(cors_middleware_1.corsMiddleware);
         this.bind('rest.cors.options').to({
-            origin: ['http://localhost:8100'],
+            origin: ['*'],
             methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
             preflightContinue: false,
             optionsSuccessStatus: 204,
