@@ -93,11 +93,15 @@ export class Order extends Entity {
   @belongsTo(() => Vendor)
   vendorId: string;
 
+  // Si la commande est passée par un vendeur (pour acheter chez un autre)
+  @belongsTo(() => Vendor, {name: 'buyerVendor'})
+  buyerVendorId?: string;
+
   @belongsTo(() => Product)
   productId: string;
 
   @belongsTo(() => Client)
-  clientId: string;
+  clientId?: string;
 
   constructor(data?: Partial<Order>) {
     super(data);
@@ -107,6 +111,7 @@ export class Order extends Entity {
 export interface OrderRelations {
   vendor?: Vendor;
   product?: Product;
+  buyerVendor?: Vendor;
 }
 
 export type OrderWithRelations = Order & OrderRelations;

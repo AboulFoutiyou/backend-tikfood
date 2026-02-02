@@ -32,6 +32,68 @@ export class OrderController {
     public productRepository: ProductRepository,
   ) {}
 
+  /**
+   * Permet à un vendeur de voir les commandes qu'il a passées chez d'autres vendeurs
+   */
+  @get('/orders/my-purchases')
+  @authenticate('jwt')
+  @response(200, {
+    description: 'Commandes passées par le vendeur (en tant qu\'acheteur)',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Order, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async getMyPurchases(
+    @inject(SecurityBindings.USER) currentUser: UserProfile,
+    @param.filter(Order) filter?: Filter<Order>,
+  ): Promise<Order[]> {
+    return this.orderRepository.find({
+      ...filter,
+      where: {buyerVendorId: currentUser.id, ...filter?.where},
+      include: ['product'],
+      order: ['createdAt DESC'],
+    });
+  }
+
+  /**
+   * Permet à un vendeur de passer une commande sur les produits d'un autre vendeur
+   */
+  @post('/orders/vendor-order')
+  @authenticate('jwt')
+  @response(200, {
+    description: 'Commande passée par un vendeur',
+    content: {'application/json': {schema: getModelSchemaRef(Order)}},
+  })
+  async vendorPlaceOrder(
+    @inject(SecurityBindings.USER) currentUser: UserProfile,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Order, {
+            title: 'VendorOrder',
+            exclude: ['id', 'createdAt', 'updatedAt', 'buyerVendorId'],
+          }),
+        },
+      },
+    })
+    order: Partial<Omit<Order, 'id' | 'createdAt' | 'updatedAt' | 'buyerVendorId'>>,
+  ): Promise<Order> {
+    // On vérifie que le vendeur ne commande pas ses propres produits
+    const product = await this.productRepository.findById(order.productId!);
+    if (product.vendorId === currentUser.id) {
+      throw new Error('Vous ne pouvez pas commander vos propres produits.');
+    }
+    // On ajoute le vendeur cible (celui qui vend le produit)
+    order.vendorId = product.vendorId;
+    // On ajoute le vendeur acheteur
+    (order as any).buyerVendorId = currentUser.id;
+    return this.orderRepository.create(order as Order);
+  }
 @post('/orders')
 @response(200, {
   description: 'Order model instance',

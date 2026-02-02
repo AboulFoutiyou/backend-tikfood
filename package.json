@@ -51,12 +51,14 @@
     "@loopback/security": "^0.12.3",
     "@loopback/service-proxy": "^8.0.2",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.9.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "jsonwebtoken": "^9.0.2",
     "loopback-connector-mongodb": "^6.3.1",
     "loopback-connector-postgresql": "^7.1.1",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "@loopback/build": "^12.0.2",
@@ -66,6 +68,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^1.4.13",
     "@types/node": "^16.18.126",
+    "@types/streamifier": "^0.1.2",
     "eslint": "^8.57.1",
     "source-map-support": "^0.5.21",
     "typescript": "~5.2.2"

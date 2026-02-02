@@ -43,7 +43,7 @@ export class FoodMarketplaceApplication extends BootMixin(
     this.middleware(corsMiddleware);
 
     this.bind('rest.cors.options').to({
-      origin: ['http://localhost:8100'], // ou spécifie l’URL de ton front, ex: 'http://localhost:4200'
+      origin: ['http://localhost:8100', 'https://tikfood-203c5.web.app'], // ou spécifie l’URL de ton front, ex: 'http://localhost:4200'
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       preflightContinue: false,
       optionsSuccessStatus: 204,

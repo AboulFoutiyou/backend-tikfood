@@ -113,6 +113,11 @@ export class VendorController {
       }
     }
 
+    // Verifier la longueur du mot de passe : minimum 8 caractères
+    if (vendor.password.length < 8) {
+      throw new HttpErrors.UnprocessableEntity('Le mot de passe doit contenir au moins 8 caractères');
+    }
+
     // Hash password
     const hashedPassword = await bcrypt.hash(vendor.password, 10);
     vendor.password = hashedPassword;

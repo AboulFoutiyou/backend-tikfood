@@ -2,49 +2,10 @@ import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Product} from './product.model';
 import {Order} from './order.model';
 import { User } from '@loopback/authentication-jwt';
+import { Simple } from './simple.model';
 
 @model()
-export class Vendor extends Entity {
-  @property({
-    type: 'string',
-    id: true,
-    genrated: true,
-  })
-  id: string;
-
-  @property({
-    type: 'string',
-    required: false,
-  })
-  email?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  name: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  password: string;
-
-
-  @property({
-    type: 'string',
-  })
-  description?: string;
-
-  @property({
-    type: 'string',
-  })
-  location?: string;
-
-  @property({
-    type: 'string',
-  })
-  phone?: string;
+export class Vendor extends Simple {
 
   @property({
     type: 'boolean',

@@ -86,6 +86,11 @@ export class ClientController {
       throw new Error('Numero de téléphone déjà utilisé par un vendeur');
     }
 
+    // Verifier la longueur du mot de passe : minimum 8 caractères
+    if (client.password.length < 8) {
+      throw new Error('Le mot de passe doit contenir au moins 8 caractères');
+    }
+
     // Hash password
     const hashedPassword = await bcrypt.hash(client.password, 10);
     client.password = hashedPassword;
@@ -93,7 +98,9 @@ export class ClientController {
     const savedClient = await this.clientRepository.create(client);
     delete (savedClient as any).password;
 
-    return {client: savedClient};
+    const token = await this.clientUserService.generateToken(savedClient);
+
+    return {client: savedClient, token};
   }
 
   // Connexion

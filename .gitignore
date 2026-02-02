@@ -1,7 +1,8 @@
 # .gitignore
-./node_modules
-./dist
-./.env
+dist/
+.env
+.git
 .DS_Store
 # Local Netlify folder
 .netlify
+node_modules/

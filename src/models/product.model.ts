@@ -69,6 +69,13 @@ export class Product extends Entity {
   })
   updatedAt?: Date;
 
+  // une propriété 'composition' qui decrit la composition du produit: designation et quantité(optionnelle)
+  @property({
+    type: 'array',
+    itemType: 'object',
+  })
+  composition?: {designation: string; quantity?: string}[];
+
   @belongsTo(() => Vendor)
   vendorId: string;
 
